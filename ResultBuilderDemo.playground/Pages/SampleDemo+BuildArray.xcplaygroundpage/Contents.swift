@@ -10,27 +10,20 @@ struct List {
 }
 
 @resultBuilder struct ListBuilder {
-    static func buildBlock(_ components: Row...) -> [Row] {
-        return components
+    static func buildBlock(_ components: [Row]...) -> [Row] {
+        return components.flatMap { $0 }
     }
 }
 
 extension ListBuilder {
-    static func buildExpression(_ expression: String) -> Row {
-        return Row(title: expression)
+    static func buildExpression(_ expression: String) -> [Row] {
+        return [Row(title: expression)]
     }
 }
 
 extension List {
     init(@ListBuilder _ content: () -> [Row]) {
         rows = content()
-    }
-}
-
-
-extension ListBuilder {
-    static func buildBlock(_ components: [Row]...) -> [Row] {
-        return components.flatMap { $0 }
     }
 }
 

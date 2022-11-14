@@ -10,17 +10,17 @@ struct List {
 }
 
 @resultBuilder struct ListBuilder {
-    static func buildBlock(_ components: Row...) -> [Row] {
-        return components
+    static func buildBlock(_ components: [Row]...) -> [Row] {
+        return components.flatMap{ $0 }
     }
 }
 
 extension ListBuilder {
-    static func buildExpression(_ expression: String) -> Row {
-        return Row(title: expression)
+    static func buildExpression(_ expression: String) -> [Row] {
+        return [Row(title: expression)]
     }
-    static func buildExpression(_ expression: Row) -> Row {
-        return expression
+    static func buildExpression(_ expression: Row) -> [Row] {
+        return [expression]
     }
 }
 
@@ -36,9 +36,6 @@ extension ListBuilder {
     }
     static func buildEither(second component: [Row]) -> [Row] {
         return component
-    }
-    static func buildBlock(_ components: [Row]...) -> [Row] {
-        return components.flatMap { $0 }
     }
 }
 
